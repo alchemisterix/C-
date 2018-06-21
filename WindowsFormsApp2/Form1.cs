@@ -44,7 +44,12 @@ namespace WindowsFormsApp2
         {
 
             _serialPort = new SerialPort(comboBox1.Text, 9600);     //lets try to open port
-            _serialPort.Open();                                     //port opening
+            try { _serialPort.Open(); }                             //port opening
+
+            catch (UnauthorizedAccessException) { label1.Text = "Access denied";
+                MessageBox.Show("Port access ERROR!", "Error");
+            }
+
             if (_serialPort.IsOpen)                                 //if port open succes
             {
                 label1.Text = "OPENING PORT";                       //Show message
